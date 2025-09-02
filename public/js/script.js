@@ -69,3 +69,18 @@ async function sendFeedback(type) {
 
 helpfulBtn.addEventListener("click", () => sendFeedback("helpful"));
 wrongBtn.addEventListener("click", () => sendFeedback("wrong"));
+function disableButtons() {
+  helpfulBtn.disabled = true;
+  wrongBtn.disabled = true;
+  helpfulBtn.style.opacity = "0.6";
+  wrongBtn.style.opacity = "0.6";
+}
+
+helpfulBtn.addEventListener("click", () => {
+  sendFeedback("helpful");
+  disableButtons();
+});
+wrongBtn.addEventListener("click", () => {
+  sendFeedback("wrong");
+  disableButtons();
+});
