@@ -38,7 +38,7 @@ body {
     border: none;
     border-radius: 5px;         
     cursor: pointer;
-    box-shadow: 0 6px 0px rgba(0,0,0,0.4);  
+    box-shadow: 0 6px 0px rgba(56, 56, 56, 0.4);  
     vertical-align: middle;
     font-size: 2rem;
     text-shadow: 0 3px 1px rgba(0,0,0,0.4);;    
