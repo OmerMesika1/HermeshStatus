@@ -159,3 +159,32 @@ body.close #status {
     margin-bottom: 10px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
+.feedback {
+  margin: 30px auto;
+  text-align: center;
+}
+
+.feedback h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.feedback button {
+  background: #111;      
+  color: #f2f2f2;             
+  border: none;                 
+  border-radius: 8px;        
+  padding: 12px 25px;
+  margin: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5); 
+  transition: all 0.2s ease-in-out;      
+}
+
+
+.feedback button:active {
+  transform: translateY(0);      /* חזרה למקום בלחיצה */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
