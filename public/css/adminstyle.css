@@ -33,7 +33,6 @@ body {
     width: 20vw;                
     height: 20vw;              
     margin: 2vw;
-    font-size: 0.5rem;
     font-weight: bold;
     color: white;               
     border: none;
@@ -41,7 +40,7 @@ body {
     cursor: pointer;
     box-shadow: 0 6px 0px rgba(0,0,0,0.4);  
     vertical-align: middle;
-    font-size: 3rem;
+    font-size: 2rem;
     text-shadow: 0 3px 1px rgba(0,0,0,0.4);;    
   }
   button.open { background: #27ae60; }
