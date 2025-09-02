@@ -23,3 +23,25 @@ fetch("/api/status")
     }
     })
     .catch(error => console.error('Error fetching data:', error));
+
+    const openHoursBtn = document.getElementById("openHoursBtn");
+    const hoursModal = document.getElementById("hoursModal");
+    const closeBtn = document.querySelector(".close-btn");
+
+    if (openHoursBtn) {
+    openHoursBtn.addEventListener("click", () => {
+        hoursModal.style.display = "block";
+    });
+    }
+
+    if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+        hoursModal.style.display = "none";
+    });
+    }
+
+    window.addEventListener("click", (e) => {
+    if (e.target === hoursModal) {
+        hoursModal.style.display = "none";
+    }
+    });
