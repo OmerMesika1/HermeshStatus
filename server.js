@@ -47,3 +47,22 @@ app.post('/api/status', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+
+const FEEDBACK_PATH = path.join(DATA_DIR, "feedback.json");
+
+if (!fs.existsSync(FEEDBACK_PATH)) {
+  fs.writeFileSync(FEEDBACK_PATH, JSON.stringify({ helpful: 0, wrong: 0 }, null, 2));
+}
+
+app.post("/api/feedback", (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync(FEEDBACK_PATH, "utf8"));
+    if (req.body.type === "helpful") data.helpful++;
+    if (req.body.type === "wrong") data.wrong++;
+    fs.writeFileSync(FEEDBACK_PATH, JSON.stringify(data, null, 2));
+    res.json(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to save feedback" });
+  }
+});

@@ -46,3 +46,26 @@ window.addEventListener("click", (e) => {
   }
 });
 
+const helpfulBtn = document.getElementById("helpfulBtn");
+const wrongBtn = document.getElementById("wrongBtn");
+const feedbackMsg = document.getElementById("feedback-msg");
+
+async function sendFeedback(type) {
+  try {
+    const res = await fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type })
+    });
+    if (res.ok) {
+      feedbackMsg.textContent = "תודה על המשוב 🙏";
+    } else {
+      feedbackMsg.textContent = "שגיאה בשליחה 😕";
+    }
+  } catch (err) {
+    feedbackMsg.textContent = "שגיאת רשת 😕";
+  }
+}
+
+helpfulBtn.addEventListener("click", () => sendFeedback("helpful"));
+wrongBtn.addEventListener("click", () => sendFeedback("wrong"));
