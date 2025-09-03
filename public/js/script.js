@@ -84,3 +84,13 @@ wrongBtn.addEventListener("click", () => {
   sendFeedback("wrong");
   disableButtons();
 });
+const FEEDBACK_PATH = path.join(DATA_DIR, 'feedback.json');
+
+if (!fs.existsSync(FEEDBACK_PATH)) {
+  fs.writeFileSync(FEEDBACK_PATH, JSON.stringify([], null, 2));
+}
+
+app.get('/api/feedback', (req, res) => {
+  const data = JSON.parse(fs.readFileSync(FEEDBACK_PATH, 'utf8'));
+  res.json(data);
+});
