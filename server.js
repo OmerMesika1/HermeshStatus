@@ -6,17 +6,22 @@ const app = express();
 
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const DB_PATH  = path.join(DATA_DIR, 'data.json');
+const FEEDBACK_PATH = path.join(DATA_DIR, "feedback.json");
 
 function ensureDb() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+
   if (!fs.existsSync(DB_PATH)) {
     fs.writeFileSync(DB_PATH, JSON.stringify({ status: 'close', lastUpdated: null }, null, 2));
+  }
+
+  if (!fs.existsSync(FEEDBACK_PATH)) {
+    fs.writeFileSync(FEEDBACK_PATH, JSON.stringify({ helpful: 0, wrong: 0 }, null, 2));
   }
 }
 ensureDb();
 
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/status', (req, res) => {
@@ -45,15 +50,6 @@ app.post('/api/status', (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
-
-const FEEDBACK_PATH = path.join(DATA_DIR, "feedback.json");
-
-if (!fs.existsSync(FEEDBACK_PATH)) {
-  fs.writeFileSync(FEEDBACK_PATH, JSON.stringify({ helpful: 0, wrong: 0 }, null, 2));
-}
-
 app.post("/api/feedback", (req, res) => {
   try {
     const data = JSON.parse(fs.readFileSync(FEEDBACK_PATH, "utf8"));
@@ -66,3 +62,16 @@ app.post("/api/feedback", (req, res) => {
     res.status(500).json({ error: "Failed to save feedback" });
   }
 });
+
+app.get('/api/feedback', (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync(FEEDBACK_PATH, 'utf8'));
+    res.json(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to read feedback" });
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
