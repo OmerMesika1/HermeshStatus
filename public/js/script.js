@@ -1,28 +1,33 @@
 fetch("/api/status")
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(data => {
-        document.body.className=data.status;
-        if(data.status === "open"){
-            document.getElementById("status").textContent="החנות פתוחה ";
-        }
-        else if(data.status === "busy"){
-            document.getElementById("status").textContent="החנות עמוסה ";
-        }
-        else{
-            document.getElementById("status").textContent="החנות סגורה ";
-        } 
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  })
+  .then(data => {
+    document.body.className = data.status;
+
+    const statusEl = document.getElementById("status");
+    if (data.status === "open") {
+      statusEl.textContent = "החנות פתוחה ";
+    } else if (data.status === "busy") {
+      statusEl.textContent = "החנות עמוסה ";
+    } else {
+      statusEl.textContent = "החנות סגורה ";
+    }
+
     if (data.lastUpdated) {
       const dt = new Date(data.lastUpdated);
-      const il = dt.toLocaleString("he-IL", { timeZone: "Asia/Jerusalem", hour12: false });
-      document.getElementById("status-time").textContent = "עדכון אחרון: " + il;
+      const il = dt.toLocaleString("he-IL", {
+        timeZone: "Asia/Jerusalem",
+        hour12: false
+      });
+      document.getElementById("status-time").textContent =
+        "עדכון אחרון: " + il;
     }
-    })
-    .catch(error => console.error('Error fetching data:', error));
+  })
+  .catch(error => console.error("Error fetching data:", error));
 
 const openHoursBtn = document.getElementById("openHoursBtn");
 const hoursModal = document.getElementById("hoursModal");
@@ -40,7 +45,7 @@ if (closeBtn) {
   });
 }
 
-window.addEventListener("click", (e) => {
+window.addEventListener("click", e => {
   if (e.target === hoursModal) {
     hoursModal.style.display = "none";
   }
@@ -66,8 +71,7 @@ async function sendFeedback(type) {
     feedbackMsg.textContent = "שגיאת רשת 😕";
   }
 }
-helpfulBtn.addEventListener("click", () => sendFeedback("helpful"));
-wrongBtn.addEventListener("click", () => sendFeedback("wrong"));
+
 function disableButtons() {
   helpfulBtn.disabled = true;
   wrongBtn.disabled = true;
@@ -75,11 +79,16 @@ function disableButtons() {
   wrongBtn.style.opacity = "0.6";
 }
 
-helpfulBtn.addEventListener("click", () => {
-  sendFeedback("helpful");
-  disableButtons();
-});
-wrongBtn.addEventListener("click", () => {
-  sendFeedback("wrong");
-  disableButtons();
-});
+if (helpfulBtn) {
+  helpfulBtn.addEventListener("click", () => {
+    sendFeedback("helpful");
+    disableButtons();
+  });
+}
+
+if (wrongBtn) {
+  wrongBtn.addEventListener("click", () => {
+    sendFeedback("wrong");
+    disableButtons();
+  });
+}
