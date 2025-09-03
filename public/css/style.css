@@ -189,3 +189,9 @@ body.close #status {
   transform: translateY(0);      /* חזרה למקום בלחיצה */
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
+.helpful {
+  background: #27ae60; /* ירוק */
+}
+.wrong {
+  background: #e74c3c; /* אדום */
+}
