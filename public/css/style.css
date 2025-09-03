@@ -20,6 +20,7 @@ body {
     background-repeat: no-repeat;
     color: white;
     text-align: center;
+    direction: rtl;
 }
 body.open {
     background-image: url("../addition/bg-open.jpg");
